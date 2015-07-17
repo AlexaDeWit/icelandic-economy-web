@@ -12,7 +12,7 @@ class Application extends Controller {
       case \/-( keys ) => {
         Ok(views.html.index(
           EveOnlineOAuth.loginQueryString( 
-            keys, "NERDASS", List("publicData"), "http://localhost:9000/callback"
+            keys, "NERDASS", List("publicData"),"http://localhost:9000/oauth_client/callback"
           )
         ))
       }

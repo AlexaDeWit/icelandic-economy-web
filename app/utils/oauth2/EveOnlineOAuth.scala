@@ -6,7 +6,7 @@ import org.http4s.util._
 
 object EveOnlineOAuth {
 
-  val authUrl = "https://login.eveonline.com/oauth/authorize"
+  val authUrl = "https://login.eveonline.com/oauth/authorize/"
   val redirectCode = 302
 
   def loginQueryString( keys: OAuth2Keys,
