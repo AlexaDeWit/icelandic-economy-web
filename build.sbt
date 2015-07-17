@@ -13,7 +13,6 @@ scalaVersion := "2.11.6"
 libraryDependencies ++= Seq(
   jdbc,
   cache,
-  ws,
   scalaz,
   httpsDsl,
   httpsBlazeClient,
