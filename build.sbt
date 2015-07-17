@@ -3,6 +3,8 @@ name := """icelandic-economy"""
 version := "1.0-SNAPSHOT"
 
 val scalaz = "org.scalaz" %% "scalaz-core" % "7.1.3"
+val httpsDsl  = "org.http4s" %% "http4s-dsl" % "0.8.4"
+val httpsBlazeClient  = "org.http4s" %% "http4s-blazeclient" % "0.8.4"
 
 lazy val root = (project in file(".")).enablePlugins(PlayScala)
 
@@ -13,6 +15,8 @@ libraryDependencies ++= Seq(
   cache,
   ws,
   scalaz,
+  httpsDsl,
+  httpsBlazeClient,
   specs2 % Test
 )
 

@@ -1,12 +1,12 @@
 package alexadewit_on_github.icelandic_economy.oauth2
 
 import scalaz._, scalaz.syntax.either._
+import play.api._
 
 case class OAuth2Keys( clientId: String, secret_key: String )
 
 object OAuth2Keys {
 
-  import play.api._
   def default: String \/ OAuth2Keys = fromPlayConfig( Play.current.configuration )
 
   def fromPlayConfig( playConfig: Configuration ): String \/ OAuth2Keys = {

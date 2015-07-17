@@ -9,10 +9,15 @@ class Application extends Controller {
 
   def index = Action {
     OAuth2Keys.default match {
-      case -\/( _ ) => 
-        Ok(views.html.index("Missing keys!" ))
-      case \/-( keys ) =>
-        Ok(views.html.index(keys.toString ))
+      case \/-( keys ) => {
+        Ok(views.html.index(
+          EveOnlineOAuth.loginQueryString( 
+            keys, "NERDASS", List("publicData"), "http://localhost:9000/callback"
+          )
+        ))
+      }
+      case -\/( _ ) =>
+        Ok(views.html.index("Butt"))
     }
   }
 
