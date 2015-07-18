@@ -3,6 +3,7 @@ package controllers
 import play.api._
 import play.api.mvc._
 import scalaz._
+import alexadewit_on_github.icelandic_economy._
 import alexadewit_on_github.icelandic_economy.oauth2._
 
 class OAuthClient extends Controller {
@@ -16,14 +17,14 @@ class OAuthClient extends Controller {
         Redirect(
           s"${EveOnlineOAuth.authUrl}?${queryString}",
           EveOnlineOAuth.redirectCode
-        )
+          ).withSession( "oauth2state" ->  TokenGenerator.randomToken( 30 ) )
       }
       case _ => NotFound( "OAuth2 Client not configured" )
     }
   }
 
   def callback( code: Option[String], state: Option[String] )  = Action { implicit request =>
-    NoContent
+    Ok( views.html.index( s"${code} --- ${state} --- ${request.session.get("oauth2state")}" ) )
   }
 
 }
