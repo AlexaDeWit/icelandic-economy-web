@@ -2,6 +2,7 @@ name := """icelandic-economy"""
 
 version := "1.0-SNAPSHOT"
 
+val argonaut = "io.argonaut" %% "argonaut" % "6.1"  
 val scalaz = "org.scalaz" %% "scalaz-core" % "7.1.3"
 val httpsDsl  = "org.http4s" %% "http4s-dsl" % "0.8.4"
 val httpsBlazeClient  = "org.http4s" %% "http4s-blazeclient" % "0.8.4"
@@ -16,6 +17,7 @@ libraryDependencies ++= Seq(
   scalaz,
   httpsDsl,
   httpsBlazeClient,
+  argonaut,
   specs2 % Test
 )
 

@@ -4,6 +4,9 @@ import scalaz._, scalaz.syntax.either._
 import org.http4s._
 import org.http4s.util._
 
+import argonaut._, Argonaut._, DecodeResult._
+import AccessToken._
+
 object EveOnlineOAuth {
 
   val authUrl = "https://login.eveonline.com/oauth/authorize/"
@@ -21,6 +24,10 @@ object EveOnlineOAuth {
       "state"         -> Some(state)
     )
     query.renderString
+  }
+
+  def getAccessToken( authCode: String, keys: OAuth2Keys ): String \/ AccessToken = {
+     //write client post request logic here.
   }
 
 }
