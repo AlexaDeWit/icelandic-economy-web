@@ -41,22 +41,21 @@ object EveOnlineOAuth {
 
     val headers = Headers( 
       Header( "Authorization", s"Basic ${base64encoded}" ),
+      Header( "Host", "login.eveonline.com" ),
       `Content-Type`(  MediaType.`application/x-www-form-urlencoded` )
     )
-    val attributes = AttributeMap(
-      AttributeEntry( AttributeKey( "grant_type" ), "authorization_code" ),
-      AttributeEntry( AttributeKey( "code" ), authCode )
+    val requestBody = Map( 
+      "grant_type" -> Seq("authorization_code"),
+      "code" -> Seq(authCode)
     )
 
     val request = Request(
       Method.POST,
       uri("https://login.eveonline.com/oauth/token"),
       HttpVersion.`HTTP/1.1`,
-      headers,
-      EmptyBody,
-      attributes )
+      headers
+      ).withBody( UrlForm( requestBody ) )
 
-    println( request )
     client( request ).as[String].run
   }
 
