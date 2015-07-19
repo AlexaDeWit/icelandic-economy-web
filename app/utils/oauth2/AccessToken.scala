@@ -14,7 +14,7 @@ case class AccessToken( token: String,
 
 object AccessToken {
   implicit def accessTokenCodecJson : CodecJson[AccessToken] = {
-    casecodec2( AccessToken.apply, AccessToken.unapply )(
+    casecodec4( AccessToken.apply, AccessToken.unapply )(
       "access_token", "token_type", "expires_in", "refresh_token"
     )
   }

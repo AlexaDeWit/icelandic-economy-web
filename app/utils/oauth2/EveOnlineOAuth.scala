@@ -4,7 +4,7 @@ import scalaz._, scalaz.syntax.either._
 import org.http4s._
 import org.http4s.util._
 
-import argonaut._, Argonaut._, DecodeResult._
+import argonaut._, Argonaut._
 import AccessToken._
 
 object EveOnlineOAuth {
@@ -26,8 +26,10 @@ object EveOnlineOAuth {
     query.renderString
   }
 
+    /*
   def getAccessToken( authCode: String, keys: OAuth2Keys ): String \/ AccessToken = {
      //write client post request logic here.
   }
+  */
 
 }
