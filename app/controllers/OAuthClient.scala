@@ -25,7 +25,12 @@ class OAuthClient extends Controller {
   }
 
   def callback( code: Option[String], state: Option[String] )  = Action { implicit request =>
-    Ok( views.html.index( s"${code} --- ${state} --- ${request.session.get("oauth2state")}" ) )
+    ( code, state ) match {
+      case ( None, _ ) | ( _ , None ) => Ok( views.html.index("FUCK!") )
+      case ( Some(authCode), Some( stateToken ) ) => {
+        Ok( views.html.index( s"${EveOnlineOAuth.getAccessToken(authCode, OAuth2Keys.default.toOption.get)}" ) )
+      }
+    }
   }
 
 }

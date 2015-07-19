@@ -3,7 +3,7 @@ package alexadewit_on_github.icelandic_economy.oauth2
 import scalaz._, scalaz.syntax.either._
 import play.api._
 
-case class OAuth2Keys( clientId: String, secret_key: String )
+case class OAuth2Keys( clientId: String, secretKey: String )
 
 object OAuth2Keys {
 
