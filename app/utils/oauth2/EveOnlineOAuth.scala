@@ -1,13 +1,14 @@
 package alexadewit_on_github.icelandic_economy.oauth2
 
 import scalaz._, scalaz.syntax.either._
+import argonaut._, Argonaut._
+
 import org.http4s._
 import org.http4s.Http4s._
 import org.http4s.util._
 import org.http4s.headers._
 import org.apache.commons.codec.binary.Base64
 
-import argonaut._, Argonaut._
 import AccessToken._
 
 object EveOnlineOAuth {

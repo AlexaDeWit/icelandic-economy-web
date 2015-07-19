@@ -4,8 +4,9 @@ version := "1.0-SNAPSHOT"
 
 val argonaut = "io.argonaut" %% "argonaut" % "6.1"  
 val scalaz = "org.scalaz" %% "scalaz-core" % "7.1.3"
-val httpsDsl  = "org.http4s" %% "http4s-dsl" % "0.8.4"
-val httpsBlazeClient  = "org.http4s" %% "http4s-blazeclient" % "0.8.4"
+val http4sDsl  = "org.http4s" %% "http4s-dsl" % "0.8.4"
+val http4sBlazeClient  = "org.http4s" %% "http4s-blazeclient" % "0.8.4"
+val http4sArgonaut = "org.http4s" %% "http4s-argonaut" % "0.8.4"
 
 lazy val root = (project in file(".")).enablePlugins(PlayScala)
 
@@ -15,8 +16,9 @@ libraryDependencies ++= Seq(
   jdbc,
   cache,
   scalaz,
-  httpsDsl,
-  httpsBlazeClient,
+  http4sDsl,
+  http4sBlazeClient,
+  http4sArgonaut,
   argonaut,
   specs2 % Test
 )
