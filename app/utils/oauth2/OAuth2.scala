@@ -18,7 +18,7 @@ object OAuth2 {
       requestUri, 
       HttpVersion.`HTTP/1.1`,
       oauth2AuthHeaders( base64EncodedKeys( keys ) )
-    ).withBody( UrlForm( accessTokenRequestBody( authCode ) ) )
+    ).withBody( UrlForm( tokenRequestMap( authCode ) ) )
   }
 
   def base64EncodedKeys( keys: OAuth2Keys ) : String = {
@@ -35,7 +35,7 @@ object OAuth2 {
     )
   }
 
-  def accessTokenRequestBody( authCode: String ) = {
+  def tokenRequestMap( authCode: String ): Map[String,Seq[String]] = {
     Map( 
       "grant_type" -> Seq("authorization_code"),
       "code" -> Seq(authCode)
