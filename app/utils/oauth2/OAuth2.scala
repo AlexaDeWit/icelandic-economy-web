@@ -21,7 +21,7 @@ object OAuth2 {
   def accessTokenRequest( requestUri: Uri, authCode: String, keys: OAuth2Keys ): Task[Request] = {
     Request(
       Method.POST,
-      requestUri, 
+      requestUri,
       HttpVersion.`HTTP/1.1`,
       oauth2AuthHeaders( base64EncodedKeys( keys ) )
     ).withBody( UrlForm( tokenRequestMap( authCode ) ) )
@@ -43,7 +43,7 @@ object OAuth2 {
   }
 
   def oauth2AuthHeaders( base64Keys: String ) : Headers = {
-    Headers( 
+    Headers(
       Header( "Authorization", s"Basic ${base64Keys}" ),
       Header( "Host", "login.eveonline.com" ),
       `Content-Type`(  MediaType.`application/x-www-form-urlencoded` )
@@ -51,7 +51,7 @@ object OAuth2 {
   }
 
   def tokenRequestMap( authCode: String ): Map[String,Seq[String]] = {
-    Map( 
+    Map(
       "grant_type" -> Seq("authorization_code"),
       "code" -> Seq(authCode)
     )
