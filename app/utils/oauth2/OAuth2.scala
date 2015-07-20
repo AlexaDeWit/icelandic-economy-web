@@ -18,7 +18,12 @@ import AccessToken._
 
 object OAuth2 {
 
-  def accessTokenRequest( requestUri: Uri, authCode: String, keys: OAuth2Keys ): Task[Request] = {
+  def accessTokenRequest(
+    requestUri: Uri,
+    authCode: String,
+    keys: OAuth2Keys )
+    : Task[Request] = {
+
     Request(
       Method.POST,
       requestUri,
@@ -27,11 +32,15 @@ object OAuth2 {
     ).withBody( UrlForm( tokenRequestMap( authCode ) ) )
   }
 
-  def accessToken( request: Task[Request], client: Client ) : Task[String \/ AccessToken] = {
+  def accessToken(
+    request: Task[Request],
+    client: Client = org.http4s.client.blaze.defaultClient  )
+      : Task[String \/ AccessToken] = {
+
     client( request ).flatMap {
       case Successful( jsonResp ) => jsonResp.as[AccessToken].map( _.right )
       case NotFound( resp )       => Task.now("404 Not Found".left)
-      case resp                   => Task.now(s"Failed: ${resp.status}".left)
+      case resp                   => Task.now(s"Failed: ${resp}".left)
     }
   }
 
