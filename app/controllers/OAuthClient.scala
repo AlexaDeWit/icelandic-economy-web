@@ -23,7 +23,7 @@ class OAuthClient extends Controller {
     })
   }
 
-  def callback( code: Option[String], state: Option[String] )  = Action { implicit request =>
+  def callback( code: Option[String], state: Option[String] ) = Action { implicit request =>
     ( code |@| state ) { case ( authCode, stateToken ) => 
       withOAuthKeysOrNotFound( OAuth2Keys.default )( keys => {
         EveOnlineOAuth.accessTokenRequest( authCode, keys ).run.fold( s => {
@@ -36,7 +36,9 @@ class OAuthClient extends Controller {
     } getOrElse ( NotFound( "REKT CUNT" ) )
   }
 
-  def withOAuthKeysOrNotFound( possibleKeys: String \/ OAuth2Keys )( f: OAuth2Keys => Result ) : Result = {
+  def withOAuthKeysOrNotFound(
+    possibleKeys: String \/ OAuth2Keys )( f: OAuth2Keys => Result ) : Result = {
+
     possibleKeys.fold( _ => NotFound( "OAuth2 Client not configured." ) , f )
   }
 
