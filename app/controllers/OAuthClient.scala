@@ -26,13 +26,7 @@ class OAuthClient extends Controller {
   def callback( code: Option[String], state: Option[String] )  = Action { implicit request =>
     ( code |@| state ) { case ( authCode, stateToken ) => 
       withOAuthKeysOrNotFound( OAuth2Keys.default )( keys => {
-        val request = OAuth2.accessTokenRequest(
-          uri("https://login.eveonline.com/oauth/token"),
-            authCode,
-            keys
-          )
-        OAuth2.accessToken( request ).run.fold( s => {
-          println( s )
+        EveOnlineOAuth.accessTokenRequest( authCode, keys ).run.fold( s => {
           InternalServerError(
             "Received an invalid response from Eve Online's OAuth2 Service." 
         )},

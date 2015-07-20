@@ -1,6 +1,6 @@
 package alexadewit_on_github.icelandic_economy.oauth2
 
-import scalaz._, scalaz.syntax.either._
+import scalaz._, scalaz.syntax.either._, scalaz.concurrent._
 import argonaut._, Argonaut._
 
 import org.http4s._
@@ -22,42 +22,26 @@ object EveOnlineOAuth {
     scopes: List[String],
     redirectUri: String ): String = {
 
-    val query = Query(
-      "response_type" -> Some("code"),
-      "redirect_uri"  -> Some(redirectUri),
-      "client_id"     -> Some(keys.clientId),
-      "scope"         -> Some(scopes.mkString(" ")),
-      "state"         -> Some(state)
-    )
-    query.renderString
+      val query = Query(
+        "response_type" -> Some("code"),
+        "redirect_uri"  -> Some(redirectUri),
+        "client_id"     -> Some(keys.clientId),
+        "scope"         -> Some(scopes.mkString(" ")),
+        "state"         -> Some(state)
+      )
+      query.renderString
   }
 
-  def getAccessToken( authCode: String, keys: OAuth2Keys ):String = {
-
+  def accessTokenRequest( authCode: String, keys: OAuth2Keys ): Task[String \/ AccessToken] = {
     val client = org.http4s.client.blaze.defaultClient
-
-    val base64encoded = Base64.encodeBase64String(
-      s"${keys.clientId}:${keys.secretKey}".getBytes() 
+    val loginUri = uri("https://login.eveonline.com/oauth/token")
+    val request = OAuth2.accessTokenRequest(
+      loginUri, 
+      authCode,
+      keys,
+      "login.eveonline.com"
     )
-
-    val headers = Headers( 
-      Header( "Authorization", s"Basic ${base64encoded}" ),
-      Header( "Host", "login.eveonline.com" ),
-      `Content-Type`(  MediaType.`application/x-www-form-urlencoded` )
-    )
-    val requestBody = Map( 
-      "grant_type" -> Seq("authorization_code"),
-      "code" -> Seq(authCode)
-    )
-
-    val request = Request(
-      Method.POST,
-      uri("https://login.eveonline.com/oauth/token"),
-      HttpVersion.`HTTP/1.1`,
-      headers
-      ).withBody( UrlForm( requestBody ) )
-
-    client( request ).as[String].run
+    OAuth2.accessToken( request )
   }
 
 }
