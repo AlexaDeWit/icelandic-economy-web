@@ -22,9 +22,9 @@ class OAuthClient extends Controller {
       )
       Redirect(
         s"${EveOnlineOAuth.authUrl}?${queryString}",
-        EveOnlineOAuth.redirectCode ).withSession( "oauth2state" -> stateToken )
-      }
-    )
+        EveOnlineOAuth.redirectCode 
+      ).withSession( "oauth2state" -> stateToken )
+    })
   }
 
   def callback( code: Option[String], state: Option[String] ) = Action { implicit request =>
@@ -43,8 +43,8 @@ class OAuthClient extends Controller {
     } getOrElse ( NotFound( "REKT CUNT" ) )
   }
 
-  def withOAuthKeysOrNotFound(
-    possibleKeys: String \/ OAuth2Keys )( f: OAuth2Keys => Result ) : Result = {
+  def withOAuthKeysOrNotFound( possibleKeys: String \/ OAuth2Keys )
+                             ( f: OAuth2Keys => Result ) : Result = {
 
       possibleKeys.fold( _ => NotFound( "OAuth2 Client not configured." ) , f )
     }
