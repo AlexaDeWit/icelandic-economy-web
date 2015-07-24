@@ -29,9 +29,27 @@ object OAuth2 {
       Method.POST,
       requestUri,
       HttpVersion.`HTTP/1.1`,
-      oauth2AuthHeaders( base64EncodedKeys( keys ), host )
+      accessTokenGrantHeaders( base64EncodedKeys( keys ), host )
     ).withBody( UrlForm( tokenRequestMap( authCode ) ) )
   }
+
+  /*
+  def refreshTokenRequest(
+    requestUri: Uri,
+    keys: OAuth2Keys,
+    host: String,
+    accessToken: AccessToken 
+    ) : Task[Request] = {
+
+    Request(
+      Method.POST,
+      requestUri,
+      HttpVersion.`HTTP/1.1`,
+      refreshTokenGrantHeaders( base64EncodedKeys( keys ), host )
+    ).withBody( UrlForm( tokenRequestMap( authCode ) ) )
+
+  }
+  */
 
   def accessToken(
     request: Task[Request],
@@ -52,7 +70,15 @@ object OAuth2 {
     )
   }
 
-  def oauth2AuthHeaders( base64Keys: String, host: String ) : Headers = {
+  def accessTokenGrantHeaders( base64Keys: String, host: String ) : Headers = {
+    Headers(
+      Header( "Authorization", s"Basic ${base64Keys}" ),
+      Header( "Host", host ),
+      `Content-Type`(  MediaType.`application/x-www-form-urlencoded` )
+    )
+  }
+  
+  def refreshTokenGrantHeaders( base64Keys: String, host: String ) : Headers = {
     Headers(
       Header( "Authorization", s"Basic ${base64Keys}" ),
       Header( "Host", host ),
@@ -60,11 +86,21 @@ object OAuth2 {
     )
   }
 
-  def tokenRequestMap( authCode: String ): Map[String,Seq[String]] = {
+  def accessTokenRequestMap( authCode: String ): Map[String,Seq[String]] = {
     Map(
       "grant_type" -> Seq("authorization_code"),
       "code" -> Seq(authCode)
     )
   }
+
+  /*
+  def refreshTokenRequestMap( authCode: String ): Map[String,Seq[String]] = {
+    Map(
+      "grant_type" -> Seq("authorization_code"),
+      "code" -> Seq(authCode)
+    )
+  }
+  */
+
 
 }
