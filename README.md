@@ -1,4 +1,4 @@
-== Icelandic Economy
+# Icelandic Economy
 
 Icelandic economy is merely a working name for a market data aggregator for eve
 online. The intention is to create a website somewhat akin to eve-central, but 
