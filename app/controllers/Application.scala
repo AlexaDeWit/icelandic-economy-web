@@ -21,4 +21,8 @@ class Application extends Controller {
     }
   }
 
+  def viewSession = Action { implicit request =>
+    Ok( views.html.index(request.session.toString))
+  }
+
 }

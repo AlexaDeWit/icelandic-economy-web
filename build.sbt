@@ -7,6 +7,7 @@ val scalaz = "org.scalaz" %% "scalaz-core" % "7.1.3"
 val http4sDsl  = "org.http4s" %% "http4s-dsl" % "0.8.4"
 val http4sBlazeClient  = "org.http4s" %% "http4s-blazeclient" % "0.8.4"
 val http4sArgonaut = "org.http4s" %% "http4s-argonaut" % "0.8.4"
+val nscalaTime = "com.github.nscala-time" %% "nscala-time" % "2.0.0"
 
 lazy val root = (project in file(".")).enablePlugins(PlayScala)
 
@@ -20,6 +21,7 @@ libraryDependencies ++= Seq(
   http4sBlazeClient,
   http4sArgonaut,
   argonaut,
+  nscalaTime,
   specs2 % Test
 )
 
