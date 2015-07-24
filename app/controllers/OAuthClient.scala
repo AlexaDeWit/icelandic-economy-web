@@ -43,9 +43,7 @@ class OAuthClient extends Controller {
     } getOrElse ( NotFound( "REKT CUNT" ) )
   }
 
-  def withOAuthKeysOrNotFound( possibleKeys: String \/ OAuth2Keys )
-                             ( f: OAuth2Keys => Result ) : Result = {
-
+  def withOAuthKeysOrNotFound( possibleKeys: String \/ OAuth2Keys )( f: OAuth2Keys => Result ) : Result = {
       possibleKeys.fold( _ => NotFound( "OAuth2 Client not configured." ) , f )
     }
 
